@@ -5,8 +5,8 @@ Instead of a plain notes page, the site is a small city. Each district is a hand
 playground for one topic, and you earn a stamp in a district by finishing its challenge.
 
 > Course: ACE - Automata Theory and Formal Languages
-> Group members: _(add your names here)_
-> Professor: _(add name here)_
+> Group members: Brix Martin Pana, Irwin Huey Geron. John abrahm Zapico 
+> Professor: Doc. Jayson Guia
 
 ## Topics covered
 
