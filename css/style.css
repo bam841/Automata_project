@@ -1,0 +1,64 @@
+/* ===== Theme colors (light, dark by system, or forced with data-theme) ===== */
+:root{--bg:#eef5fa;--card:#fff;--ink:#16222e;--mut:#5a6b7a;--ln:#cfdbe6;--ac:#2f5fd0;--onac:#fff;--ok:#0d7a52;--bad:#c93434;--pa:#127a6b;--sa:#c4492a;--oncar:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101b26;--card:#182735;--ink:#e6eef5;--mut:#93a6b6;--ln:#2d4256;--ac:#7aa7ff;--onac:#0b1a33;--ok:#4fdc9d;--bad:#ff7a7a;--pa:#2fb59f;--sa:#ff8c68;--oncar:#0b1a22}}
+:root[data-theme="dark"]{--bg:#101b26;--card:#182735;--ink:#e6eef5;--mut:#93a6b6;--ln:#2d4256;--ac:#7aa7ff;--onac:#0b1a33;--ok:#4fdc9d;--bad:#ff7a7a;--pa:#2fb59f;--sa:#ff8c68;--oncar:#0b1a22}
+
+/* ===== Base ===== */
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+#app{max-width:720px;margin:0 auto;padding:18px 16px 40px}
+h1,h2{font-family:Georgia,serif;margin:.3em 0}
+h1{font-size:2.1rem}
+.mut{color:var(--mut)}
+.bad{color:var(--bad)}
+.ok{color:var(--ok)}
+
+/* ===== Controls ===== */
+button,select{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--ln);border-radius:10px;padding:7px 12px;margin:3px 4px 3px 0;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,.tn:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.pri,.chip.on{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+.chip{width:40px;height:40px;border-radius:50%;padding:0}
+input:not([type]){background:var(--card);color:var(--ink);border:2px solid var(--ln);border-radius:8px;padding:6px 8px;font:inherit;width:9.5em}
+.f{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+
+/* ===== City map (home screen) ===== */
+.map{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:14px}
+.dist{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:3px;margin:0;padding:16px;min-height:120px;border-left:12px solid var(--c);border-radius:12px}
+.dist em{font-style:normal;margin-top:auto;color:var(--mut)}
+.dist.st em{color:var(--ok);font-weight:600}
+
+/* ===== Challenge banner ===== */
+.ch{border:2px dashed var(--ln);border-radius:10px;padding:10px 12px;margin:14px 0}
+.ch.done{border:2px solid var(--ok);color:var(--ok);font-weight:600}
+
+/* ===== String Street (train cars) ===== */
+.row{display:flex;flex-wrap:wrap;gap:3px;margin:4px 0}
+.car{font:700 1.1rem/1 Georgia,serif;font-style:normal;min-width:30px;height:34px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;color:var(--oncar)}
+.car.p{background:var(--pa)}
+.car.s{background:var(--sa)}
+.car.e{background:var(--ln);color:var(--ink)}
+
+/* ===== Tables ===== */
+table{border-collapse:collapse;width:100%}
+th,td{padding:6px 8px;border:1px solid var(--ln);text-align:center}
+.ot{background:var(--card)}
+.ot th,.ot td{text-align:left;vertical-align:top}
+.ot th{white-space:nowrap}
+.sc{overflow-x:auto;background:var(--card);border-radius:10px;margin:8px 0}
+
+/* ===== SVG drawings (Venn, tree, DFA) ===== */
+svg{background:var(--card);border:1px solid var(--ln);border-radius:10px;margin:8px 0}
+.vc{fill:color-mix(in srgb,var(--ac) 14%,transparent);stroke:var(--ac);stroke-width:2}
+.el,.nd{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.el.hl{fill:var(--ac);stroke:var(--ac)}
+.el.cur{stroke:var(--ok);stroke-width:4}
+.el.hl+.qn{fill:var(--onac)}
+.qn{fill:var(--ink);font:13px system-ui}
+.ed{fill:none;stroke:var(--mut);stroke-width:1.5}
+.ar{fill:var(--mut)}
+.lb{fill:var(--sa);font:700 12px system-ui}
+.tn{cursor:pointer}
+
+/* ===== Accessibility ===== */
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
