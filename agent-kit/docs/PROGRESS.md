@@ -1,11 +1,11 @@
 # Progress Tracker (the agent updates this at the end of every task)
 
-**Current milestone:** M1 Complete (Ready for M2) · **Branch:** m1-walking · **Last updated:** 2026-10-12
+**Current milestone:** M2 Complete (Ready for M3) · **Branch:** m2-stations · **Last updated:** 2026-10-12
 
 ## Milestones
 - [x] **M0 Refactor** — ground truth · namespace · pure logic + tests · mountable views · Classic Mode · regression pass
 - [x] **M1 Walking prototype** — canvas scaling · loop · input · tilemap · collision · camera · player · hub + 4 regions (placeholder art)
-- [ ] **M2 Stations wired** — triggers/prompts · lecture shell · Practice/Challenge mounted · stamps + persistence · HUD · Professor Delta · quest arrow
+- [x] **M2 Stations wired** — triggers/prompts · lecture shell · Practice/Challenge mounted · stamps + persistence · HUD · Professor Delta · quest arrow
 - [ ] **M3 Blackboard lessons** — lesson player · chalk/CRT skins · 4 lessons · quick checks
 - [ ] **M4 World and feel** — asset manifest · tiles · district dressing · NPCs · shards + Journal · day/night · SFX · title + character select
 - [ ] **M5 Minigames (optional)** — Venn stepping · Tree walk · DFA ride · String pads
@@ -33,14 +33,25 @@
 - [x] Mode toggle between World Game and Classic Mode [VERIFIED].
 - [x] Total test suite: 52 tests passing [VERIFIED].
 
+### M2 — Stations Wired & Lecture Shell
+- [x] Proximity triggers (`AC.triggers`) for all 4 district stations and Professor Delta NPC [VERIFIED].
+- [x] Contextual interact prompt ("[E] Inspect Board", "[E] Talk to Prof Delta") rendered when in trigger radius [VERIFIED].
+- [x] Lecture modal shell (`AC.lessons.shell`) with blackboard theme, focus trap, Esc-to-close, and accessible tabs (Learn, Practice, Challenge) [VERIFIED].
+- [x] Clean mounting and unmounting of Practice and Challenge views inside modal container with zero listener leaks [VERIFIED].
+- [x] State machine coordination (`AC.setState`, `AC.getState`): inputs disabled in `lecture` and `dialogue`, world loop continues background rendering [VERIFIED].
+- [x] HUD displays 4 district stamp badges (`[S]`, `[P]`, `[T]`, `[D]`) reflecting persistent progress with stamp glow, plus minimap radar [VERIFIED].
+- [x] Professor Delta NPC dialogue tree with progressive advice based on stamp count, guiding player to next unstamped district and unsealing Exam Tower at 4 stamps [VERIFIED].
+- [x] 20 open/close rapid cycle test executed with zero listener leaks or runtime errors [VERIFIED].
+- [x] Total test suite: 57 tests passing [VERIFIED].
+
 ## Known issues
 - None.
 
 ## Open questions for the human
-- None. M1 Walking Prototype is fully verified and ready for M2 (Stations wired & blackboard lecture shell).
+- None. M2 is complete and verified. Ready to proceed to M3 (Blackboard lessons with step player).
 
 ## Last session summary
-- M1 Walking Prototype complete. Engine and world systems implemented with zero external dependencies, running at 60 FPS with pixel-perfect integer scaling. Next: Milestone 2 (Stations wired, interaction triggers, and lecture overlay shell).
+- Milestone 2 completed. All 4 district stations and Professor Delta fully wired to interactive lecture shell, HUD stamp badges, and dialogue system. 57 tests passing. Ready for M3.
 
 
 

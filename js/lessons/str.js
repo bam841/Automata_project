@@ -28,8 +28,10 @@
     const vInput = currentHost.querySelector('#v');
     const kSlider = currentHost.querySelector('#k');
 
-    if (wInput) W = wInput.value;
-    if (vInput) V = vInput.value;
+    if (wInput && typeof wInput.value === 'string') W = wInput.value;
+    if (vInput && typeof vInput.value === 'string') V = vInput.value;
+    W = W || '';
+    V = V || '';
 
     const charsW = [...W];
     const charsV = [...V];
@@ -37,7 +39,7 @@
 
     if (kSlider) {
       kSlider.max = n;
-      K = Math.min(+kSlider.value, n);
+      K = Math.min(kSlider.value !== undefined ? +kSlider.value : K, n);
     }
 
     const kvEl = currentHost.querySelector('#kv');
