@@ -1,10 +1,46 @@
-/* main.js: Boots the game world loop and manages top-level modes. */
+/* main.js: State machine controller, world loop coordinator, and Classic Mode switcher. */
 (function (root) {
   'use strict';
 
   const AC = root.AC = root.AC || {};
 
   let currentMode = 'game'; // 'game' | 'classic'
+  let currentState = 'boot'; // 'boot' | 'title' | 'world' | 'lecture' | 'dialogue' | 'paused'
+
+  const VALID_TRANSITIONS = {
+    boot: ['title', 'world'],
+    title: ['world'],
+    world: ['lecture', 'dialogue', 'paused'],
+    lecture: ['world'],
+    dialogue: ['world'],
+    paused: ['world']
+  };
+
+  AC.setState = function (newState) {
+    if (newState === currentState) return;
+
+    const allowed = VALID_TRANSITIONS[currentState] || [];
+    if (!allowed.includes(newState)) {
+      throw new Error(`Illegal state transition from "${currentState}" to "${newState}"`);
+    }
+
+    const previousState = currentState;
+    currentState = newState;
+
+    if (currentState === 'lecture' || currentState === 'dialogue') {
+      if (AC.input) AC.input.setEnabled(false);
+    } else if (currentState === 'world') {
+      if (AC.input) AC.input.setEnabled(true);
+    }
+
+    if (AC.bus && typeof AC.bus.emit === 'function') {
+      AC.bus.emit('state', { from: previousState, to: currentState });
+    }
+  };
+
+  AC.getState = function () {
+    return currentState;
+  };
 
   function setMode(mode) {
     currentMode = mode;
@@ -20,8 +56,14 @@
       const canvas = document.getElementById('game');
       if (canvas && AC.game) {
         AC.game.init(canvas);
+        AC.setState('world');
         AC.loop.start(
-          dt => AC.game.update(dt),
+          dt => {
+            // Only update world physics/movement when in 'world' state
+            if (currentState === 'world') {
+              AC.game.update(dt);
+            }
+          },
           alpha => AC.game.render()
         );
       }

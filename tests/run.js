@@ -20,16 +20,23 @@ const modulesToLoad = [
   'js/engine/collide.js',
   'js/world/tiles.js',
   'js/world/map-data.js',
+  'js/world/districts.js',
+  'js/world/triggers.js',
+  'js/world/hud.js',
+  'js/world/dialogue.js',
   'js/world/player.js',
   'js/world/game.js',
   'js/logic/strings.js',
   'js/logic/sets.js',
   'js/logic/tree.js',
   'js/logic/dfa.js',
+  'js/lessons/shell.js',
   'js/lessons/str.js',
   'js/lessons/set.js',
   'js/lessons/tree.js',
-  'js/lessons/dfa.js'
+  'js/lessons/dfa.js',
+  'js/classic.js',
+  'js/main.js'
 ];
 
 for (const rel of modulesToLoad) {
