@@ -11,10 +11,15 @@ require('./harness.js');
 // Load core and logic modules as they become available
 const modulesToLoad = [
   'js/core/ac.js',
+  'js/core/progress.js',
   'js/logic/strings.js',
   'js/logic/sets.js',
   'js/logic/tree.js',
-  'js/logic/dfa.js'
+  'js/logic/dfa.js',
+  'js/lessons/str.js',
+  'js/lessons/set.js',
+  'js/lessons/tree.js',
+  'js/lessons/dfa.js'
 ];
 
 for (const rel of modulesToLoad) {
