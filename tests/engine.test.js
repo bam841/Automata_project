@@ -114,4 +114,19 @@
     assert.equal(cam.y, mapH_px - 180);
   });
 
+  test('M1.7: AC.Camera.isVisible correctly tests viewport intersection', function () {
+    const cam = new AC.Camera(320, 180);
+    cam.x = 100;
+    cam.y = 100;
+
+    // Inside viewport
+    assert.equal(cam.isVisible(150, 150, 16, 16), true, 'Inside viewport must be visible');
+    // Overlapping left edge
+    assert.equal(cam.isVisible(90, 120, 20, 20), true, 'Overlapping left edge must be visible');
+    // Completely to the left
+    assert.equal(cam.isVisible(50, 120, 10, 10), false, 'Outside left must not be visible');
+    // Completely above
+    assert.equal(cam.isVisible(150, 50, 10, 10), false, 'Outside above must not be visible');
+  });
+
 })(typeof globalThis !== 'undefined' ? globalThis : window);
