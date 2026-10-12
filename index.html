@@ -5,27 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Automata City</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/game.css">
 </head>
-<body>
+<body class="game-active">
+  <!-- Mode Switcher -->
+  <button id="mode-toggle-btn" class="mode-toggle">Classic Mode</button>
+
+  <!-- World Game Canvas View -->
+  <div id="game-container">
+    <canvas id="game"></canvas>
+  </div>
+
+  <!-- Classic Mode & Dialog View Host -->
   <div id="app"></div>
 
-  <!-- Core namespace and state -->
+  <!-- Core Namespace & State -->
   <script src="js/core/ac.js"></script>
   <script src="js/core/progress.js"></script>
 
-  <!-- Pure theory logic modules -->
+  <!-- Engine Modules -->
+  <script src="js/engine/render.js"></script>
+  <script src="js/engine/loop.js"></script>
+  <script src="js/engine/input.js"></script>
+  <script src="js/engine/camera.js"></script>
+  <script src="js/engine/tilemap.js"></script>
+  <script src="js/engine/collide.js"></script>
+
+  <!-- World Modules -->
+  <script src="js/world/tiles.js"></script>
+  <script src="js/world/map-data.js"></script>
+  <script src="js/world/player.js"></script>
+  <script src="js/world/game.js"></script>
+
+  <!-- Pure Theory Logic Modules -->
   <script src="js/logic/strings.js"></script>
   <script src="js/logic/sets.js"></script>
   <script src="js/logic/tree.js"></script>
   <script src="js/logic/dfa.js"></script>
 
-  <!-- Mountable district views -->
+  <!-- Mountable District Views -->
   <script src="js/lessons/str.js"></script>
   <script src="js/lessons/set.js"></script>
   <script src="js/lessons/tree.js"></script>
   <script src="js/lessons/dfa.js"></script>
 
-  <!-- Classic Mode & Application entry point -->
+  <!-- Classic Mode & Entry Bootstrapper -->
   <script src="js/classic.js"></script>
   <script src="js/main.js"></script>
 </body>

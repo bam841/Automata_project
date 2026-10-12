@@ -1,0 +1,62 @@
+/* game.css: Canvas layout, integer letterboxing, and mode toggle. */
+
+#game-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a1017;
+  overflow: hidden;
+  z-index: 1;
+}
+
+canvas#game {
+  display: block;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+/* Mode toggle button in the top-right corner */
+.mode-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  background: rgba(24, 39, 53, 0.85);
+  color: #e6eef5;
+  border: 2px solid #2d4256;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.15s ease;
+}
+
+.mode-toggle:hover {
+  background: #2f5fd0;
+  border-color: #7aa7ff;
+}
+
+/* Classic Mode container overlay */
+#app {
+  position: relative;
+  z-index: 10;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+body.game-active #app {
+  display: none;
+}
+
+body.classic-active #game-container {
+  display: none;
+}
