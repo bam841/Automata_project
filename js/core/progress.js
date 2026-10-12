@@ -11,6 +11,7 @@
       name: '',
       sprite: 0,
       stamps: { str: false, set: false, tree: false, dfa: false },
+      lessons: { str: false, set: false, tree: false, dfa: false },
       shards: [],
       exam: { passed: false, best: 0 },
       player: { tx: 32, ty: 34 },
@@ -52,6 +53,7 @@
           name: typeof parsed.name === 'string' ? parsed.name : '',
           sprite: typeof parsed.sprite === 'number' ? parsed.sprite : 0,
           stamps: Object.assign({ str: false, set: false, tree: false, dfa: false }, parsed.stamps),
+          lessons: Object.assign({ str: false, set: false, tree: false, dfa: false }, parsed.lessons),
           shards: Array.isArray(parsed.shards) ? [...parsed.shards] : [],
           exam: Object.assign({ passed: false, best: 0 }, parsed.exam),
           player: Object.assign({ tx: 32, ty: 34 }, parsed.player),
@@ -111,6 +113,21 @@
 
     hasShard(id) {
       return state.shards.includes(id);
+    },
+
+    setLessonSeen(id) {
+      if (!state.lessons) state.lessons = { str: false, set: false, tree: false, dfa: false };
+      if (typeof state.lessons[id] !== 'undefined') {
+        state.lessons[id] = true;
+        this.save();
+        if (AC.bus && typeof AC.bus.emit === 'function') {
+          AC.bus.emit('lesson:seen', { id });
+        }
+      }
+    },
+
+    hasSeenLesson(id) {
+      return state.lessons ? Boolean(state.lessons[id]) : false;
     }
   };
 

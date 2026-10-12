@@ -30,11 +30,15 @@ const modulesToLoad = [
   'js/logic/sets.js',
   'js/logic/tree.js',
   'js/logic/dfa.js',
+  'js/logic/quiz.js',
   'js/lessons/shell.js',
+  'js/lessons/lesson-player.js',
+  'js/lessons/drawings.js',
   'js/lessons/str.js',
   'js/lessons/set.js',
   'js/lessons/tree.js',
   'js/lessons/dfa.js',
+  'js/lessons/lessons-data.js',
   'js/classic.js',
   'js/main.js'
 ];

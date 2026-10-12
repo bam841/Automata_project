@@ -57,17 +57,9 @@
     };
 
     if (activeTab === 'learn') {
-      bodyEl.innerHTML = `
-        <div class="chalk-board">
-          <h3>${lesson.title} — Guided Lesson</h3>
-          <p>Full 6–8 step blackboard animations are scheduled for <b>Milestone 3</b>.</p>
-          <p>Switch to the <b>Practice</b> or <b>Challenge</b> tab above to interact with the station right now!</p>
-          <button class="pri" data-tab-switch="practice">Go to Practice</button>
-        </div>
-      `;
-      const btn = bodyEl.querySelector('[data-tab-switch]');
-      if (btn) {
-        btn.addEventListener('click', () => switchTab('practice'));
+      mountedModule = lesson.learn;
+      if (mountedModule && typeof mountedModule.mount === 'function') {
+        mountedModule.mount(bodyEl, ctx);
       }
     } else if (activeTab === 'practice') {
       mountedModule = lesson.practice;
@@ -243,6 +235,10 @@
 
     getActiveTab() {
       return activeTab;
+    },
+
+    switchTab(tab) {
+      switchTab(tab);
     }
   };
 
