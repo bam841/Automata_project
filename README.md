@@ -87,3 +87,5 @@ variables, so the order of the `<script>` tags in `index.html` matters:
 - Union and intersection of two DFAs, to connect the set operations with automata.
 - NFA and ε-NFA builders.
 - Saving progress between visits.
+
+# Automata_project
