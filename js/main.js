@@ -10,9 +10,13 @@
   const VALID_TRANSITIONS = {
     boot: ['title', 'world'],
     title: ['world'],
-    world: ['lecture', 'dialogue', 'paused', 'title'],
+    world: ['lecture', 'dialogue', 'paused', 'title', 'journal', 'exam', 'certificate', 'settings'],
     lecture: ['world'],
     dialogue: ['world'],
+    journal: ['world'],
+    exam: ['world', 'certificate'],
+    certificate: ['world'],
+    settings: ['world', 'title'],
     paused: ['world', 'title']
   };
 
@@ -27,7 +31,8 @@
     const previousState = currentState;
     currentState = newState;
 
-    if (currentState === 'lecture' || currentState === 'dialogue') {
+    const modalStates = ['lecture', 'dialogue', 'journal', 'exam', 'certificate', 'settings', 'paused'];
+    if (modalStates.includes(currentState)) {
       if (AC.input) AC.input.setEnabled(false);
     } else if (currentState === 'world') {
       if (AC.input) AC.input.setEnabled(true);

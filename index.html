@@ -8,8 +8,11 @@
   <link rel="stylesheet" href="css/game.css">
 </head>
 <body class="game-active">
-  <!-- Mode Switcher -->
-  <button id="mode-toggle-btn" class="mode-toggle">Classic Mode</button>
+  <!-- Mode Switcher & Quick Controls -->
+  <div class="top-nav-bar">
+    <button id="mode-toggle-btn" class="mode-toggle">Classic Mode</button>
+    <button id="quick-settings-btn" class="settings-toggle-btn" aria-label="Game Settings">⚙ Settings [O]</button>
+  </div>
 
   <!-- World Game Canvas View -->
   <div id="game-container">
@@ -18,6 +21,28 @@
 
   <!-- Classic Mode & Dialog View Host -->
   <div id="app"></div>
+
+  <!-- Modal Overlays -->
+  <div id="exam-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true"></div>
+  <div id="cert-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true"></div>
+  <div id="settings-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true"></div>
+
+  <!-- On-Screen Touch Controls (Mobile D-Pad & Actions) -->
+  <div id="touch-controls" class="touch-controls" aria-hidden="true">
+    <div class="touch-dpad">
+      <button class="touch-btn touch-up" data-touch="up" aria-label="Up">▲</button>
+      <button class="touch-btn touch-left" data-touch="left" aria-label="Left">◀</button>
+      <div class="touch-dpad-center"></div>
+      <button class="touch-btn touch-right" data-touch="right" aria-label="Right">▶</button>
+      <button class="touch-btn touch-down" data-touch="down" aria-label="Down">▼</button>
+    </div>
+    <div class="touch-actions">
+      <button class="touch-btn touch-act touch-act-sub" data-touch="settings" aria-label="Settings">⚙</button>
+      <button class="touch-btn touch-act touch-act-sub" data-touch="hint" aria-label="Hint">H</button>
+      <button class="touch-btn touch-act touch-act-sub" data-touch="journal" aria-label="Journal">J</button>
+      <button class="touch-btn touch-act touch-act-main" data-touch="interact" aria-label="Interact">E</button>
+    </div>
+  </div>
 
   <!-- Core Namespace & State -->
   <script src="js/core/ac.js"></script>
@@ -31,6 +56,24 @@
   <script src="js/engine/tilemap.js"></script>
   <script src="js/engine/collide.js"></script>
   <script src="js/engine/audio.js"></script>
+
+  <!-- Pure Theory Logic Modules -->
+  <script src="js/logic/strings.js"></script>
+  <script src="js/logic/sets.js"></script>
+  <script src="js/logic/tree.js"></script>
+  <script src="js/logic/dfa.js"></script>
+  <script src="js/logic/quiz.js"></script>
+  <script src="js/logic/exam-gen.js"></script>
+
+  <!-- Mountable District Views & Lecture Shell -->
+  <script src="js/lessons/shell.js"></script>
+  <script src="js/lessons/lesson-player.js"></script>
+  <script src="js/lessons/drawings.js"></script>
+  <script src="js/lessons/str.js"></script>
+  <script src="js/lessons/set.js"></script>
+  <script src="js/lessons/tree.js"></script>
+  <script src="js/lessons/dfa.js"></script>
+  <script src="js/lessons/lessons-data.js"></script>
 
   <!-- World Modules -->
   <script src="js/world/tiles.js"></script>
@@ -46,25 +89,12 @@
   <script src="js/world/dressing.js"></script>
   <script src="js/world/atmosphere.js"></script>
   <script src="js/world/title.js"></script>
+  <script src="js/world/tower.js"></script>
+  <script src="js/world/certificate.js"></script>
+  <script src="js/world/settings.js"></script>
+  <script src="js/world/touch.js"></script>
   <script src="js/world/player.js"></script>
   <script src="js/world/game.js"></script>
-
-  <!-- Pure Theory Logic Modules -->
-  <script src="js/logic/strings.js"></script>
-  <script src="js/logic/sets.js"></script>
-  <script src="js/logic/tree.js"></script>
-  <script src="js/logic/dfa.js"></script>
-  <script src="js/logic/quiz.js"></script>
-
-  <!-- Mountable District Views & Lecture Shell -->
-  <script src="js/lessons/shell.js"></script>
-  <script src="js/lessons/lesson-player.js"></script>
-  <script src="js/lessons/drawings.js"></script>
-  <script src="js/lessons/str.js"></script>
-  <script src="js/lessons/set.js"></script>
-  <script src="js/lessons/tree.js"></script>
-  <script src="js/lessons/dfa.js"></script>
-  <script src="js/lessons/lessons-data.js"></script>
 
   <!-- Classic Mode & Entry Bootstrapper -->
   <script src="js/classic.js"></script>

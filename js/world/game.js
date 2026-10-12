@@ -28,6 +28,9 @@
     if (AC.npcs && typeof AC.npcs.initTriggers === 'function') {
       AC.npcs.initTriggers();
     }
+    if (AC.tower && typeof AC.tower.initTrigger === 'function') {
+      AC.tower.initTrigger();
+    }
     if (AC.companion && typeof AC.companion.init === 'function') {
       AC.companion.init(this.player.x, this.player.y);
     }
@@ -47,6 +50,22 @@
   Game.prototype.update = function (dt) {
     if (AC.input && AC.input.pressed('debug')) {
       this.showDebug = !this.showDebug;
+    }
+
+    if (AC.input && AC.input.pressed('settings')) {
+      if (AC.settings) AC.settings.open();
+    }
+
+    if (AC.input && AC.input.pressed('theme')) {
+      if (AC.atmosphere && typeof AC.atmosphere.cycle === 'function') {
+        AC.atmosphere.cycle();
+      }
+    }
+
+    if (AC.input && AC.input.pressed('mute')) {
+      if (AC.audio && typeof AC.audio.toggleMute === 'function') {
+        AC.audio.toggleMute();
+      }
     }
 
     // Check interaction with nearest trigger

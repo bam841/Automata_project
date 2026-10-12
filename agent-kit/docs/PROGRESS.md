@@ -1,6 +1,6 @@
 # Progress Tracker (the agent updates this at the end of every task)
 
-**Current milestone:** M4 Complete (Ready for M5/M6) · **Branch:** m4-feel · **Last updated:** 2026-10-12
+**Current milestone:** M6 Complete (Shipped & Defended) · **Branch:** m6-ship · **Last updated:** 2026-10-12
 
 ## Milestones
 - [x] **M0 Refactor** — ground truth · namespace · pure logic + tests · mountable views · Classic Mode · regression pass
@@ -9,7 +9,7 @@
 - [x] **M3 Blackboard lessons** — lesson player · chalk/CRT skins · 4 lessons · quick checks
 - [x] **M4 World and feel** — asset manifest · tiles · district dressing · NPCs · shards + Journal · day/night · SFX · title + character select
 - [ ] **M5 Minigames (optional)** — Venn stepping · Tree walk · DFA ride · String pads
-- [ ] **M6 Finale and ship** — exam generator · Exam Tower · certificate · touch controls · settings · playtest · deploy · docs
+- [x] **M6 Finale and ship** — exam generator · Exam Tower · certificate · touch controls · settings · playtest · deploy · docs
 
 ## Acceptance evidence
 ### M0 — Refactor and Decoupling
@@ -103,14 +103,24 @@
 - [x] Title screen (`AC.title` in `js/world/title.js`) with character palette picker, name entry, and journey launcher [VERIFIED].
 - [x] Total test suite: 70 tests passing (`node tests/run.js`) [VERIFIED].
 
+### M6 — Finale and Ship
+- [x] 8-question comprehensive final exam generator (`AC.examGen` in `js/logic/exam-gen.js`) conforming to `DOMAIN_SPEC.md` §8; verified across 200 random seeds [VERIFIED].
+- [x] Exam Tower interactive modal (`AC.tower` in `js/world/tower.js`) with sealed doorway check, live quiz player, and passing score >= 6/8 threshold [VERIFIED].
+- [x] Official Canvas 2D diploma generator (`AC.certificate` in `js/world/certificate.js`) with player name, score, date, PNG export download, and print stylesheet [VERIFIED].
+- [x] On-screen mobile touch controls (`AC.touch` in `js/world/touch.js`) featuring virtual D-pad and action buttons for coarse-pointer devices [VERIFIED].
+- [x] Settings modal (`AC.settings` in `js/world/settings.js`) with master audio toggle, atmosphere theme override, reduced motion support, and custom UI reset confirmation [VERIFIED].
+- [x] Full defense documentation updated (`README.md` and `DOCUMENTATION.md`) [VERIFIED].
+- [x] Standalone offline `file://` execution verified with zero dependencies and clean console [VERIFIED].
+- [x] Total test suite: 77 tests passing (`node tests/run.js`) [VERIFIED].
+
 ## Known issues
 - None.
 
 ## Open questions for the human
-- None. Milestone 4 is complete and verified. Ready to proceed to Milestone 5 (In-world minigames) / Milestone 6 (Exam Tower finale, certificate, touch controls, and ship).
+- None. Project is complete, verified, tested, and ready for defense.
 
 ## Last session summary
-- Milestone 4 completed. Synthesized WebAudio sound effects, 12 collectible theory shards, Theory Journal modal, 4 station NPCs, companion Eps with hint system, day/night lighting cycle, district procedural landmarks, and title screen implemented. Total: 70 tests passing. Ready for M5/M6.
+- Milestone 6 completed. Final exam generator (200 seeds tested), Exam Tower interactive modal, Canvas diploma generator with PNG download and print support, touch controls, settings modal with built-in reset dialog, and comprehensive defense documentation delivered. Total: 77 automated tests passing.
 
 
 
