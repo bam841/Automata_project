@@ -644,3 +644,264 @@ body.classic-active #game-container {
   margin-bottom: 8px;
 }
 
+/* --- Milestone 4: Theory Journal & Title Screen --- */
+#journal-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 14, 22, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+}
+
+#journal-modal[hidden] {
+  display: none !important;
+}
+
+.journal-dialog {
+  background: #111a24;
+  border: 2px solid #3b5066;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+  color: #e6eef5;
+  overflow: hidden;
+}
+
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #182535;
+  border-bottom: 1px solid #2a3c50;
+}
+
+.journal-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.journal-counter {
+  font-size: 12px;
+  color: #fffa65;
+  font-weight: bold;
+}
+
+.journal-close-btn {
+  background: transparent;
+  border: none;
+  color: #9cb3c9;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.journal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.journal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  padding: 16px 20px;
+  overflow-y: auto;
+}
+
+.journal-card {
+  background: #182330;
+  border: 1px solid #2c3f54;
+  border-radius: 8px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.journal-card.collected {
+  border-top: 3px solid var(--card-accent, #7aa7ff);
+  background: #152230;
+}
+
+.journal-card.locked {
+  opacity: 0.6;
+  border-style: dashed;
+}
+
+.journal-symbol {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.journal-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.journal-district {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.journal-def {
+  font-size: 11px;
+  line-height: 1.35;
+  color: #9cb3c9;
+  margin-top: auto;
+}
+
+.journal-footer {
+  padding: 10px 20px;
+  background: #141f2c;
+  border-top: 1px solid #243547;
+  text-align: center;
+  color: #8da4bb;
+}
+
+/* Title Screen */
+.title-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 11, 18, 0.92);
+  z-index: 300;
+}
+
+.title-overlay[hidden] {
+  display: none !important;
+}
+
+.title-card {
+  background: #111b26;
+  border: 2px solid #374f68;
+  border-radius: 14px;
+  padding: 28px 32px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.9);
+}
+
+.title-logo-badge {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #7aa7ff;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.title-heading {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 1.5px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(122, 167, 255, 0.5);
+}
+
+.title-tagline {
+  font-size: 13px;
+  color: #9cb3c9;
+  margin: 6px 0 20px;
+}
+
+.title-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.title-input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #c5d7e8;
+}
+
+.title-input-label input {
+  background: #1a2736;
+  border: 1px solid #374f68;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.sprite-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.sprite-opt-btn {
+  background: #192534;
+  border: 1px solid #33485e;
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e6eef5;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sprite-opt-btn:hover {
+  background: #223246;
+  border-color: #557599;
+}
+
+.sprite-opt-btn.active {
+  border-color: var(--spr-color, #7aa7ff);
+  background: rgba(122, 167, 255, 0.15);
+  box-shadow: 0 0 8px rgba(122, 167, 255, 0.3);
+}
+
+.sprite-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.sprite-label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.title-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn-large {
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+

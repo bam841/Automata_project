@@ -10,10 +10,10 @@
   const VALID_TRANSITIONS = {
     boot: ['title', 'world'],
     title: ['world'],
-    world: ['lecture', 'dialogue', 'paused'],
+    world: ['lecture', 'dialogue', 'paused', 'title'],
     lecture: ['world'],
     dialogue: ['world'],
-    paused: ['world']
+    paused: ['world', 'title']
   };
 
   AC.setState = function (newState) {

@@ -1,13 +1,13 @@
 # Progress Tracker (the agent updates this at the end of every task)
 
-**Current milestone:** M3 Complete (Ready for M4) · **Branch:** m3-lessons · **Last updated:** 2026-10-12
+**Current milestone:** M4 Complete (Ready for M5/M6) · **Branch:** m4-feel · **Last updated:** 2026-10-12
 
 ## Milestones
 - [x] **M0 Refactor** — ground truth · namespace · pure logic + tests · mountable views · Classic Mode · regression pass
 - [x] **M1 Walking prototype** — canvas scaling · loop · input · tilemap · collision · camera · player · hub + 4 regions (placeholder art)
 - [x] **M2 Stations wired** — triggers/prompts · lecture shell · Practice/Challenge mounted · stamps + persistence · HUD · Professor Delta · quest arrow
 - [x] **M3 Blackboard lessons** — lesson player · chalk/CRT skins · 4 lessons · quick checks
-- [ ] **M4 World and feel** — asset manifest · tiles · district dressing · NPCs · shards + Journal · day/night · SFX · title + character select
+- [x] **M4 World and feel** — asset manifest · tiles · district dressing · NPCs · shards + Journal · day/night · SFX · title + character select
 - [ ] **M5 Minigames (optional)** — Venn stepping · Tree walk · DFA ride · String pads
 - [ ] **M6 Finale and ship** — exam generator · Exam Tower · certificate · touch controls · settings · playtest · deploy · docs
 
@@ -90,14 +90,27 @@
 | DFA Station (`dfa`) | 7 | The Formal 5-Tuple | DOMAIN_SPEC §4 | 5-tuple (Q, Σ, δ, q0, F) structure |
 | DFA Station (`dfa`) | 8 | Complementing a DFA | DOMAIN_SPEC §4 | `AC.dfa.complement`: flips accept states |
 
+### M4 — World and Feel
+- [x] Asset manifest (`assets/MANIFEST.md`) complete documenting procedural graphics, synthesized audio, and credit lines [VERIFIED].
+- [x] Standalone sprite and tile inspector tool (`tools/contact-sheet.html`) operational [VERIFIED].
+- [x] Synthesized WebAudio sound effects (`AC.audio` in `js/engine/audio.js`) with 7 event cues, master volume limit <= 0.18, and persistent mute toggle [VERIFIED].
+- [x] 12 collectible theory symbol shards (`AC.shards` in `js/world/shards.js`) matching `DOMAIN_SPEC.md` §6, verified 100% reachable from spawn via BFS [VERIFIED].
+- [x] In-game Theory Journal modal (`AC.journal` in `js/world/journal.js`) displaying 12 slot cards with definitions and symbols, accessible via [J] key [VERIFIED].
+- [x] 4 resident district station NPCs (`AC.npcs` in `js/world/npcs.js`) with interactive hint lines [VERIFIED].
+- [x] Companion Eps (`AC.companion` in `js/world/companion.js`) following player trail with lag smoothing, zero collision, and contextual hints via [H] key [VERIFIED].
+- [x] Procedural district dressing (`AC.dressing` in `js/world/dressing.js`) rendering railway tracks, Venn ponds, tree node lanterns, and DFA state platforms [VERIFIED].
+- [x] Day/Night atmosphere cycle (`AC.atmosphere` in `js/world/atmosphere.js`) with radial lamp cutouts, fireflies, and [T] toggle [VERIFIED].
+- [x] Title screen (`AC.title` in `js/world/title.js`) with character palette picker, name entry, and journey launcher [VERIFIED].
+- [x] Total test suite: 70 tests passing (`node tests/run.js`) [VERIFIED].
+
 ## Known issues
 - None.
 
 ## Open questions for the human
-- None. Milestone 3 is complete and verified. Ready to proceed to Milestone 4 (World and Feel: assets, tiles, dressing, NPC wanderers, Journal).
+- None. Milestone 4 is complete and verified. Ready to proceed to Milestone 5 (In-world minigames) / Milestone 6 (Exam Tower finale, certificate, touch controls, and ship).
 
 ## Last session summary
-- Milestone 3 completed. All four chalkboard / CRT guided lessons implemented with computed examples, visual drawing helpers, step player with keyboard navigation, 200-seed verified quiz generator, and complete Learn tab integration. Total: 63 tests passing. Ready for M4.
+- Milestone 4 completed. Synthesized WebAudio sound effects, 12 collectible theory shards, Theory Journal modal, 4 station NPCs, companion Eps with hint system, day/night lighting cycle, district procedural landmarks, and title screen implemented. Total: 70 tests passing. Ready for M5/M6.
 
 
 

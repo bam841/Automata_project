@@ -25,6 +25,12 @@
     if (AC.triggers) {
       AC.triggers.initDefaultTriggers();
     }
+    if (AC.npcs && typeof AC.npcs.initTriggers === 'function') {
+      AC.npcs.initTriggers();
+    }
+    if (AC.companion && typeof AC.companion.init === 'function') {
+      AC.companion.init(this.player.x, this.player.y);
+    }
 
     // Snap camera immediately to player
     this.camera.snapTo(
@@ -53,6 +59,22 @@
 
     if (this.player && this.map) {
       this.player.update(dt, this.map);
+    }
+
+    if (AC.dressing && typeof AC.dressing.update === 'function') {
+      AC.dressing.update(dt);
+    }
+
+    if (AC.shards && typeof AC.shards.update === 'function') {
+      AC.shards.update(dt, this.player);
+    }
+
+    if (AC.companion && typeof AC.companion.update === 'function') {
+      AC.companion.update(dt, this.player);
+    }
+
+    if (AC.atmosphere && typeof AC.atmosphere.update === 'function') {
+      AC.atmosphere.update(dt);
     }
 
     if (this.camera && this.player && this.map) {
@@ -85,19 +107,40 @@
     // 2. Draw ground layer
     this.map.drawLayer(ctx, this.camera, 'ground');
 
-    // 3. Draw objects layer
+    // 3. Ground landmarks dressing
+    if (AC.dressing && typeof AC.dressing.drawGroundDressing === 'function') {
+      AC.dressing.drawGroundDressing(ctx, this.camera);
+    }
+
+    // 4. Draw objects layer
     this.map.drawLayer(ctx, this.camera, 'objects');
 
-    // 4. Draw Professor Delta NPC at (32, 35)
+    // 5. Draw Professor Delta NPC at (32, 35) and resident NPCs
     this.drawNPC(ctx, 32 * 16, 35 * 16);
+    if (AC.npcs && typeof AC.npcs.draw === 'function') {
+      AC.npcs.draw(ctx, this.camera);
+    }
 
-    // 5. Draw player
+    // 6. Draw shards
+    if (AC.shards && typeof AC.shards.draw === 'function') {
+      AC.shards.draw(ctx, this.camera);
+    }
+
+    // 7. Draw player and companion
     this.player.draw(ctx, this.camera);
+    if (AC.companion && typeof AC.companion.draw === 'function') {
+      AC.companion.draw(ctx, this.camera);
+    }
 
-    // 6. Draw above layer
+    // 8. Draw above layer
     this.map.drawLayer(ctx, this.camera, 'above');
 
-    // 7. Draw HUD (Stamps, Minimap, Prompt Bubble)
+    // 9. Draw day/night atmospheric tint and lamps
+    if (AC.atmosphere && typeof AC.atmosphere.draw === 'function') {
+      AC.atmosphere.draw(ctx, this.camera);
+    }
+
+    // 10. Draw HUD (Stamps, Minimap, Prompt Bubble)
     if (AC.hud) {
       AC.hud.draw(ctx, this);
     }
