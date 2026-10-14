@@ -20,5 +20,7 @@ get the human's approval. Agents never change a settled decision silently.
 | D-013 | Theory logic is pure and seeded; lesson/exam values computed, never hard-coded | Correctness and testability | Accepted |
 | D-014 | Exam: 8 questions, pass ≥ 6; 12 shards; 6–9 steps per lesson | Scope control | Accepted |
 
+| D-015 | AC.dialogue.show(speaker, lines) multi-speaker API with robust keycode/key & delegated click advance | Allows all resident NPCs and Professor Delta to be interacted with via E, Space, Enter, mouse click, and touch | Accepted |
+
 ## New decisions (append below)
-<!-- | D-015 | … | … | Proposed/Accepted | -->
+<!-- | D-016 | … | … | Proposed/Accepted | -->

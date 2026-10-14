@@ -21,6 +21,8 @@
     KeyJ: 'journal',
     KeyU: 'mute',
     KeyH: 'hint',
+    KeyT: 'theme',
+    KeyO: 'settings',
     F3: 'debug'
   };
 

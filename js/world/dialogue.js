@@ -7,6 +7,7 @@
   let dialogueEl = null;
   let isOpen = false;
   let currentScript = [];
+  let currentSpeaker = 'Professor Delta';
   let scriptIndex = 0;
   let fullText = '';
   let charIndex = 0;
@@ -25,6 +26,20 @@
     }
     dialogueEl = el;
     return dialogueEl;
+  }
+
+  function initDialogueEl() {
+    const el = getDialogueEl();
+    if (!el) return null;
+    if (!el._hasClickListener) {
+      el._hasClickListener = true;
+      el.addEventListener('click', (e) => {
+        if (!isOpen) return;
+        e.stopPropagation();
+        advance();
+      });
+    }
+    return el;
   }
 
   function getProfessorHint() {
@@ -69,7 +84,7 @@
   }
 
   function showNextPage() {
-    const el = getDialogueEl();
+    const el = initDialogueEl();
     if (!el) return;
 
     if (scriptIndex >= currentScript.length) {
@@ -81,9 +96,13 @@
     charIndex = 0;
     scriptIndex++;
 
+    const speakerName = (AC.util && typeof AC.util.esc === 'function')
+      ? AC.util.esc(currentSpeaker)
+      : currentSpeaker;
+
     el.innerHTML = `
       <div class="dialogue-card">
-        <div class="dialogue-speaker">Professor Delta</div>
+        <div class="dialogue-speaker">${speakerName}</div>
         <div class="dialogue-body" id="dialogue-text"></div>
         <div class="dialogue-hint">Press E or Click to continue ▶</div>
       </div>
@@ -111,16 +130,28 @@
   function handleInput(e) {
     if (!isOpen) return;
 
-    if (e.key === 'KeyE' || e.key === 'Enter' || e.key === 'Space') {
+    const isInteractKey = (
+      e.code === 'KeyE' ||
+      e.code === 'Enter' ||
+      e.code === 'Space' ||
+      e.key === 'e' ||
+      e.key === 'E' ||
+      e.key === 'Enter' ||
+      e.key === ' '
+    );
+
+    if (isInteractKey) {
       e.preventDefault();
       advance();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === 'Escape' || e.code === 'Escape') {
       e.preventDefault();
       close();
     }
   }
 
   function advance() {
+    if (!isOpen) return;
+
     if (typewriterTimer) {
       // Complete current text immediately
       clearInterval(typewriterTimer);
@@ -129,6 +160,9 @@
       const textEl = el ? el.querySelector('#dialogue-text') : null;
       if (textEl) textEl.textContent = fullText;
     } else {
+      if (AC.audio && typeof AC.audio.play === 'function') {
+        AC.audio.play('select');
+      }
       showNextPage();
     }
   }
@@ -149,37 +183,47 @@
       root.removeEventListener('keydown', handleInput);
     }
 
+    if (AC.input && typeof AC.input.clearPressed === 'function') {
+      AC.input.clearPressed();
+    }
+
     if (AC.setState) {
       AC.setState('world');
     }
   }
 
+  function start(customScript, speakerName) {
+    const el = initDialogueEl();
+    if (!el) return;
+
+    isOpen = true;
+    currentSpeaker = speakerName || 'Professor Delta';
+    currentScript = customScript || getProfessorHint();
+    scriptIndex = 0;
+
+    if (AC.setState) {
+      AC.setState('dialogue');
+    }
+
+    if (AC.audio && typeof AC.audio.play === 'function') {
+      AC.audio.play('select');
+    }
+
+    el.hidden = false;
+    showNextPage();
+
+    if (typeof root.addEventListener !== 'undefined') {
+      root.addEventListener('keydown', handleInput);
+    }
+  }
+
+  function show(speakerName, lines) {
+    start(lines, speakerName);
+  }
+
   AC.dialogue = {
-    start(customScript) {
-      const el = getDialogueEl();
-      if (!el) return;
-
-      isOpen = true;
-      currentScript = customScript || getProfessorHint();
-      scriptIndex = 0;
-
-      if (AC.setState) {
-        AC.setState('dialogue');
-      }
-
-      el.hidden = false;
-      showNextPage();
-
-      if (typeof root.addEventListener !== 'undefined') {
-        root.addEventListener('keydown', handleInput);
-      }
-
-      const card = el.querySelector('.dialogue-card');
-      if (card) {
-        card.addEventListener('click', advance);
-      }
-    },
-
+    start,
+    show,
     advance,
     close,
     isOpen: () => isOpen,

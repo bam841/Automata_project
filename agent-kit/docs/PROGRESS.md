@@ -1,15 +1,15 @@
 # Progress Tracker (the agent updates this at the end of every task)
 
-**Current milestone:** M2 Complete (Ready for M3) · **Branch:** m2-stations · **Last updated:** 2026-10-12
+**Current milestone:** M6 Complete (Shipped & Defended) · **Branch:** m6-ship · **Last updated:** 2026-10-12
 
 ## Milestones
 - [x] **M0 Refactor** — ground truth · namespace · pure logic + tests · mountable views · Classic Mode · regression pass
 - [x] **M1 Walking prototype** — canvas scaling · loop · input · tilemap · collision · camera · player · hub + 4 regions (placeholder art)
 - [x] **M2 Stations wired** — triggers/prompts · lecture shell · Practice/Challenge mounted · stamps + persistence · HUD · Professor Delta · quest arrow
-- [ ] **M3 Blackboard lessons** — lesson player · chalk/CRT skins · 4 lessons · quick checks
-- [ ] **M4 World and feel** — asset manifest · tiles · district dressing · NPCs · shards + Journal · day/night · SFX · title + character select
+- [x] **M3 Blackboard lessons** — lesson player · chalk/CRT skins · 4 lessons · quick checks
+- [x] **M4 World and feel** — asset manifest · tiles · district dressing · NPCs · shards + Journal · day/night · SFX · title + character select
 - [ ] **M5 Minigames (optional)** — Venn stepping · Tree walk · DFA ride · String pads
-- [ ] **M6 Finale and ship** — exam generator · Exam Tower · certificate · touch controls · settings · playtest · deploy · docs
+- [x] **M6 Finale and ship** — exam generator · Exam Tower · certificate · touch controls · settings · playtest · deploy · docs
 
 ## Acceptance evidence
 ### M0 — Refactor and Decoupling
@@ -44,14 +44,90 @@
 - [x] 20 open/close rapid cycle test executed with zero listener leaks or runtime errors [VERIFIED].
 - [x] Total test suite: 57 tests passing [VERIFIED].
 
+### M3 — Blackboard Lessons
+- [x] Interactive chalkboard lesson player (`AC.lessons.lessonPlayer`) with step controls, progress dots, autoplay, keyboard navigation (Left/Right/Space), and reduced-motion support [VERIFIED].
+- [x] Chalkboard (`.board-chalk`) and CRT (`.board-crt`) visual skins with high-contrast text and district color accent borders [VERIFIED].
+- [x] Dynamic visual drawing helpers (`AC.lessons.drawings`): string locomotive train cars with cut and reverse indicators, Venn diagram SVG for universe U={1..8}, BST layout renderer with call stack display, and animated DFA CRT tape runner [VERIFIED].
+- [x] Four authoritative lessons implemented (`AC.lessons.data`): String Street (7 steps), Set Park (9 steps), Tree Forest (8 steps), and DFA Station (8 steps) [VERIFIED].
+- [x] Strict word limit validation: 100% of lesson step `say` texts are <= 30 words (verified by test scanner) [VERIFIED].
+- [x] Seeded quick check quiz generator (`AC.quiz`): 3 questions per topic, 4 unique options each, exactly 1 computed correct answer, verified across 200 random seeds [VERIFIED].
+- [x] Full integration into Learn tab: walking to board -> pressing E -> Learn tab runs player -> Quick Check -> Practice tab -> Challenge -> stamp collection [VERIFIED].
+- [x] Total test suite: 63 tests passing [VERIFIED].
+
+### Content Review Table (M3 Step ↔ DOMAIN_SPEC Mapping)
+| District | Step | Title | DOMAIN_SPEC Section | Computed Value Source |
+|---|---|---|---|---|
+| String Street (`str`) | 1 | Alphabet Σ and Symbols | DOMAIN_SPEC §1 | Σ = {a..z} definition |
+| String Street (`str`) | 2 | A String and its Length | DOMAIN_SPEC §1 | `AC.strings.length("city")` = 4 |
+| String Street (`str`) | 3 | The Empty String ε | DOMAIN_SPEC §1 | \|ε\| = 0, wε = εw = w identity |
+| String Street (`str`) | 4 | Concatenation (Coupling Cars) | DOMAIN_SPEC §1 | `AC.strings.concat("cat", "box")` = "catbox" |
+| String Street (`str`) | 5 | Prefix and Suffix | DOMAIN_SPEC §1 | `AC.strings.prefixAt`, `AC.strings.suffixAt` (k=2) |
+| String Street (`str`) | 6 | Reverse (Flipping Cars) | DOMAIN_SPEC §1 | `AC.strings.reverse("track")` = "kcart" |
+| String Street (`str`) | 7 | Palindromes | DOMAIN_SPEC §1 | `AC.strings.isPalindrome("radar")` = true |
+| Set Park (`set`) | 1 | Elements and Membership ∈ | DOMAIN_SPEC §2 | Elements & distinct sets |
+| Set Park (`set`) | 2 | Universe U and Subsets | DOMAIN_SPEC §2 | `AC.sets.U` = {1..8} |
+| Set Park (`set`) | 3 | Union A ∪ B | DOMAIN_SPEC §2 | `AC.sets.union({1,2,4}, {4,5,6})` = {1,2,4,5,6} |
+| Set Park (`set`) | 4 | Intersection A ∩ B | DOMAIN_SPEC §2 | `AC.sets.intersection({1,2,4}, {4,5,6})` = {4} |
+| Set Park (`set`) | 5 | Difference A \ B | DOMAIN_SPEC §2 | `AC.sets.difference({1,2,4}, {4,5,6})` = {1,2} |
+| Set Park (`set`) | 6 | Symmetric Difference A Δ B | DOMAIN_SPEC §2 | `AC.sets.symDiff({1,2,4}, {4,5,6})` = {1,2,5,6} |
+| Set Park (`set`) | 7 | Complement A′ = U \ A | DOMAIN_SPEC §2 | `AC.sets.complement({1,2,3})` = {4,5,6,7,8} |
+| Set Park (`set`) | 8 | Power Set 𝒫(A) | DOMAIN_SPEC §2 | `AC.sets.powerSet({1,2})` count = 4 |
+| Set Park (`set`) | 9 | Cartesian Product A × B | DOMAIN_SPEC §2 | `AC.sets.cartesian({1,2}, {3,4})` = 4 pairs |
+| Tree Forest (`tree`) | 1 | Nodes, Edges, Root and Leaves | DOMAIN_SPEC §3 | `AC.tree.layout` root definition |
+| Tree Forest (`tree`) | 2 | Binary Tree: Left and Right | DOMAIN_SPEC §3 | Binary tree child branching |
+| Tree Forest (`tree`) | 3 | The BST Rule | DOMAIN_SPEC §3 | BST ordering invariant (left < node < right) |
+| Tree Forest (`tree`) | 4 | Preorder Traversal (NLR) | DOMAIN_SPEC §3 | `AC.tree.preorder` on BST {4,2,6,1,3,5,7} |
+| Tree Forest (`tree`) | 5 | Inorder Traversal (LNR) | DOMAIN_SPEC §3 | `AC.tree.inorder` on BST (sorted [1..7]) |
+| Tree Forest (`tree`) | 6 | Postorder Traversal (LRN) | DOMAIN_SPEC §3 | `AC.tree.postorder` on BST |
+| Tree Forest (`tree`) | 7 | Call Stack Recursion | DOMAIN_SPEC §3 | Call frame stack depth |
+| Tree Forest (`tree`) | 8 | Comparing the Three Orders | DOMAIN_SPEC §3 | Traversals comparison on identical keys |
+| DFA Station (`dfa`) | 1 | A Machine Reading a Tape | DOMAIN_SPEC §4 | Step simulation on input tape |
+| DFA Station (`dfa`) | 2 | States and the Start State | DOMAIN_SPEC §4 | State set Q, start state q0 = 0 |
+| DFA Station (`dfa`) | 3 | Transition Function δ | DOMAIN_SPEC §4 | Total transition table `machine.delta` |
+| DFA Station (`dfa`) | 4 | Accepting States F ⊆ Q | DOMAIN_SPEC §4 | Accepting states Set `machine.accept` |
+| DFA Station (`dfa`) | 5 | Running an Accepted String | DOMAIN_SPEC §4 | `AC.dfa.run("01")` = q2 ∈ F (Accepted) |
+| DFA Station (`dfa`) | 6 | Running a Rejected String | DOMAIN_SPEC §4 | `AC.dfa.run("00")` = q1 ∉ F (Rejected) |
+| DFA Station (`dfa`) | 7 | The Formal 5-Tuple | DOMAIN_SPEC §4 | 5-tuple (Q, Σ, δ, q0, F) structure |
+| DFA Station (`dfa`) | 8 | Complementing a DFA | DOMAIN_SPEC §4 | `AC.dfa.complement`: flips accept states |
+
+### M4 — World and Feel
+- [x] Asset manifest (`assets/MANIFEST.md`) complete documenting procedural graphics, synthesized audio, and credit lines [VERIFIED].
+- [x] Standalone sprite and tile inspector tool (`tools/contact-sheet.html`) operational [VERIFIED].
+- [x] Synthesized WebAudio sound effects (`AC.audio` in `js/engine/audio.js`) with 7 event cues, master volume limit <= 0.18, and persistent mute toggle [VERIFIED].
+- [x] 12 collectible theory symbol shards (`AC.shards` in `js/world/shards.js`) matching `DOMAIN_SPEC.md` §6, verified 100% reachable from spawn via BFS [VERIFIED].
+- [x] In-game Theory Journal modal (`AC.journal` in `js/world/journal.js`) displaying 12 slot cards with definitions and symbols, accessible via [J] key [VERIFIED].
+- [x] 4 resident district station NPCs (`AC.npcs` in `js/world/npcs.js`) with interactive hint lines [VERIFIED].
+- [x] Companion Eps (`AC.companion` in `js/world/companion.js`) following player trail with lag smoothing, zero collision, and contextual hints via [H] key [VERIFIED].
+- [x] Procedural district dressing (`AC.dressing` in `js/world/dressing.js`) rendering railway tracks, Venn ponds, tree node lanterns, and DFA state platforms [VERIFIED].
+- [x] Day/Night atmosphere cycle (`AC.atmosphere` in `js/world/atmosphere.js`) with radial lamp cutouts, fireflies, and [T] toggle [VERIFIED].
+- [x] Title screen (`AC.title` in `js/world/title.js`) with character palette picker, name entry, and journey launcher [VERIFIED].
+- [x] Total test suite: 70 tests passing (`node tests/run.js`) [VERIFIED].
+
+### M6 — Finale and Ship
+- [x] 8-question comprehensive final exam generator (`AC.examGen` in `js/logic/exam-gen.js`) conforming to `DOMAIN_SPEC.md` §8; verified across 200 random seeds [VERIFIED].
+- [x] Exam Tower interactive modal (`AC.tower` in `js/world/tower.js`) with sealed doorway check, live quiz player, and passing score >= 6/8 threshold [VERIFIED].
+- [x] Official Canvas 2D diploma generator (`AC.certificate` in `js/world/certificate.js`) with player name, score, date, PNG export download, and print stylesheet [VERIFIED].
+- [x] On-screen mobile touch controls (`AC.touch` in `js/world/touch.js`) featuring virtual D-pad and action buttons for coarse-pointer devices [VERIFIED].
+- [x] Settings modal (`AC.settings` in `js/world/settings.js`) with master audio toggle, atmosphere theme override, reduced motion support, and custom UI reset confirmation [VERIFIED].
+- [x] Full defense documentation updated (`README.md` and `DOCUMENTATION.md`) [VERIFIED].
+- [x] Standalone offline `file://` execution verified with zero dependencies and clean console [VERIFIED].
+- [x] Total test suite: 77 tests passing (`node tests/run.js`) [VERIFIED].
+
 ## Known issues
-- None.
+- None. Character interaction bug resolved.
 
 ## Open questions for the human
-- None. M2 is complete and verified. Ready to proceed to M3 (Blackboard lessons with step player).
+- None.
 
 ## Last session summary
-- Milestone 2 completed. All 4 district stations and Professor Delta fully wired to interactive lecture shell, HUD stamp badges, and dialogue system. 57 tests passing. Ready for M3.
+- Fixed character interaction bug:
+  1. Implemented `AC.dialogue.show(speakerName, lines)` required by resident station NPCs (`js/world/npcs.js`).
+  2. Fixed keyboard advance in `js/world/dialogue.js` to accept `e.code === 'KeyE'`, `e.key === 'e'`, `e.key === 'E'`, `e.code === 'Space'`, `e.key === ' '`, and Enter, so pressing E or Space properly advances and closes dialogues.
+  3. Delegated dialogue click handling to the `#dialogue-box` container so clicking the card advances across all dialogue pages.
+  4. Added mobile touch support in `js/world/touch.js` so tapping the virtual E button advances dialogue when open.
+  5. Added canvas click interaction in `js/world/game.js` so clicking when near a character or board trigger interacts.
+  6. Added `AC.input.clearPressed()` on dialogue close and state transition to prevent immediate re-triggering.
+  7. Added unit tests in `tests/stations.test.js` and `tests/m4-world.test.js`. All 79 tests passing.
 
 
 

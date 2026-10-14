@@ -62,8 +62,12 @@
     ctx.fillRect(screenX + 4, screenY + 11, 3, 3);
     ctx.fillRect(screenX + 9, screenY + 11, 3, 3);
 
-    // 3. Torso (Blue shirt)
-    ctx.fillStyle = '#2f5fd0';
+    // 3. Torso (Custom Character Palette)
+    const spriteColors = ['#2f5fd0', '#10b981', '#f59e0b', '#8b5cf6'];
+    const sprIdx = (AC.progress && typeof AC.progress.get === 'function' && typeof AC.progress.get().sprite === 'number')
+      ? Math.abs(AC.progress.get().sprite) % 4
+      : 0;
+    ctx.fillStyle = spriteColors[sprIdx] || '#2f5fd0';
     ctx.fillRect(screenX + 3, screenY + 6, 10, 6);
 
     // 4. Head & Face

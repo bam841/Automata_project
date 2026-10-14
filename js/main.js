@@ -10,10 +10,14 @@
   const VALID_TRANSITIONS = {
     boot: ['title', 'world'],
     title: ['world'],
-    world: ['lecture', 'dialogue', 'paused'],
+    world: ['lecture', 'dialogue', 'paused', 'title', 'journal', 'exam', 'certificate', 'settings'],
     lecture: ['world'],
     dialogue: ['world'],
-    paused: ['world']
+    journal: ['world'],
+    exam: ['world', 'certificate'],
+    certificate: ['world'],
+    settings: ['world', 'title'],
+    paused: ['world', 'title']
   };
 
   AC.setState = function (newState) {
@@ -27,10 +31,14 @@
     const previousState = currentState;
     currentState = newState;
 
-    if (currentState === 'lecture' || currentState === 'dialogue') {
+    const modalStates = ['lecture', 'dialogue', 'journal', 'exam', 'certificate', 'settings', 'paused'];
+    if (modalStates.includes(currentState)) {
       if (AC.input) AC.input.setEnabled(false);
     } else if (currentState === 'world') {
-      if (AC.input) AC.input.setEnabled(true);
+      if (AC.input) {
+        AC.input.setEnabled(true);
+        AC.input.clearPressed();
+      }
     }
 
     if (AC.bus && typeof AC.bus.emit === 'function') {

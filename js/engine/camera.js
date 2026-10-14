@@ -39,4 +39,13 @@
     this.y = Math.max(0, Math.min(maxY, this.y));
   };
 
+  AC.Camera.prototype.isVisible = function (boxX, boxY, boxW = 0, boxH = 0) {
+    return (
+      boxX + boxW >= this.x &&
+      boxX <= this.x + this.w &&
+      boxY + boxH >= this.y &&
+      boxY <= this.y + this.h
+    );
+  };
+
 })(typeof globalThis !== 'undefined' ? globalThis : window);

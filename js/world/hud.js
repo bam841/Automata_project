@@ -64,6 +64,13 @@
       ctx.textAlign = 'center';
       ctx.fillText(`★ ${shardCount}/12`, badgeX0 + 4 * spacing + 21, badgeY0 + 10);
 
+      // Player name & key shortcuts guide
+      const pName = (AC.progress && typeof AC.progress.get === 'function' && AC.progress.get().name) || 'Student';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '7px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`${pName} | [J] Journal [H] Hint [T] Cycle Time`, badgeX0, badgeY0 + badgeSize + 8);
+
       // 2. Top-Right: Minimap Radar (44x44 px)
       const mmX = 270;
       const mmY = 6;
