@@ -1,8 +1,15 @@
-/* npcs.js: Resident station NPCs with hints and interaction triggers. */
+/* npcs.js: Resident station NPCs using dynamically recolored Meppo sprites. */
 (function (root) {
   'use strict';
 
   const AC = root.AC = root.AC || {};
+
+  // --- SPRITESHEET CONFIG ---
+  const MEPPO_SRC = 'assets/meppo.png'; // Update path if needed
+  const CELL_SIZE = 64;
+  const DRAW_SIZE = 24; // Crisp pixel divisor of 128/64
+  const IDLE_FRAMES = 5;
+  const IDLE_FPS = 6;
 
   const NPCS_DATA = [
     {
@@ -63,6 +70,57 @@
     }
   ];
 
+  // Global animation timer for all NPCs
+  let globalAnimTimer = 0;
+  let globalAnimFrame = 0;
+
+  // Load and pre-render tinted spritesheets
+  const baseSheet = new Image();
+  baseSheet.onload = function () {
+    NPCS_DATA.forEach(npc => {
+      npc.tintedSheet = createTintedSheet(baseSheet, npc.color);
+    });
+  };
+  baseSheet.src = MEPPO_SRC;
+
+  // Helper: Generates a recolored version of the Meppo spritesheet in memory
+  function createTintedSheet(img, hexColor) {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    // Parse target hex color to RGB
+    const r = parseInt(hexColor.slice(1, 3), 16);
+    const g = parseInt(hexColor.slice(3, 5), 16);
+    const b = parseInt(hexColor.slice(5, 7), 16);
+
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imgData.data;
+
+    // Isolate the red body pixels (ignoring white eyes and black pupils)
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] > 0) { // If not transparent
+        const pR = data[i];
+        const pG = data[i + 1];
+        const pB = data[i + 2];
+        
+        // If Red channel dominates (it's the red body, not a white eye or black pupil)
+        if (pR > pG + 30 && pR > pB + 30) {
+          // Normalize shading based on Meppo's original base red (~158)
+          const shade = pR / 158; 
+          data[i] = Math.min(255, r * shade);     // R
+          data[i + 1] = Math.min(255, g * shade); // G
+          data[i + 2] = Math.min(255, b * shade); // B
+        }
+      }
+    }
+    
+    ctx.putImageData(imgData, 0, 0);
+    return canvas;
+  }
+
   AC.npcs = {
     getAll() {
       return NPCS_DATA;
@@ -89,6 +147,19 @@
       }
     },
 
+    update(dt) {
+      // If dt is undefined or broken, default to 0.016 (roughly 60fps)
+      const safeDt = (typeof dt === 'number' && dt > 0) ? dt : 0.016; 
+      
+      const frameDuration = 1 / IDLE_FPS;
+      globalAnimTimer += safeDt;
+      
+      if (globalAnimTimer >= frameDuration) {
+        globalAnimTimer -= frameDuration;
+        globalAnimFrame = (globalAnimFrame + 1) % IDLE_FRAMES;
+      }
+    },
+
     draw(ctx, camera) {
       if (!ctx || !camera) return;
 
@@ -98,31 +169,35 @@
 
         if (!camera.isVisible(wx, wy, 16, 20)) continue;
 
-        const sx = wx - camera.x;
-        const sy = wy - camera.y;
+        const sx = Math.round(wx - camera.x);
+        const sy = Math.round(wy - camera.y);
 
-        // Shadow
+        // 1. Foot Shadow
         ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
-        ctx.beginPath();
-        ctx.ellipse(sx + 8, sy + 15, 6, 3, 0, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillRect(sx + 3, sy + 13, 10, 3);
 
-        // NPC Body
+        // 2. Draw recolored Meppo Sprite
+        if (npc.tintedSheet) {
+          ctx.imageSmoothingEnabled = false;
+          
+          const srcX = globalAnimFrame * CELL_SIZE;
+          const srcY = 0; // Row 0 is the Idle animation
+
+          const offsetX = Math.floor((16 - DRAW_SIZE) / 2);
+          const offsetY = (16 - DRAW_SIZE) - 4; // Shift up to align feet
+
+          // NPCs face right by default, so we flip them to face left (Meppo's default) or keep them right
+          ctx.drawImage(
+            npc.tintedSheet,
+            srcX, srcY, CELL_SIZE, CELL_SIZE,
+            sx + offsetX, sy + offsetY, DRAW_SIZE, DRAW_SIZE
+          );
+          continue; 
+        }
+
+        // 3. Loading Fallback
         ctx.fillStyle = npc.color;
-        ctx.fillRect(sx + 3, sy + 6, 10, 8);
-
-        // Head
-        ctx.fillStyle = '#ffdfba';
-        ctx.fillRect(sx + 4, sy + 1, 8, 7);
-
-        // Hat / Hair in district color
-        ctx.fillStyle = npc.color;
-        ctx.fillRect(sx + 3, sy, 10, 3);
-
-        // Eyes
-        ctx.fillStyle = '#111';
-        ctx.fillRect(sx + 6, sy + 4, 1, 2);
-        ctx.fillRect(sx + 9, sy + 4, 1, 2);
+        ctx.fillRect(sx + 4, sy + 2, 8, 13);
       }
     }
   };

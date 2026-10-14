@@ -111,3 +111,17 @@
   AC.getMode = () => currentMode;
 
 })(typeof globalThis !== 'undefined' ? globalThis : window);
+
+// Inside your main game update function...
+function update(dt) {
+    // Other update code...
+    
+    if (AC.player) {
+        AC.player.update(dt, currentMap);
+    }
+
+    // ADD THIS LINE HERE:
+    if (AC.npcs && typeof AC.npcs.update === 'function') {
+        AC.npcs.update(dt);
+    }
+}

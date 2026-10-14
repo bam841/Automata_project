@@ -93,6 +93,11 @@
       this.player.update(dt, this.map);
     }
 
+    // --- ANIMATE NPCS HERE ---
+    if (AC.npcs && typeof AC.npcs.update === 'function') {
+      AC.npcs.update(dt);
+    }
+
     if (AC.dressing && typeof AC.dressing.update === 'function') {
       AC.dressing.update(dt);
     }
@@ -177,12 +182,12 @@
       AC.hud.draw(ctx, this);
     }
 
-    // 8. Debug overlay (F3)
+    // 11. Debug overlay (F3)
     if (this.showDebug) {
       this.renderDebug(ctx);
     }
 
-    // 9. Blit buffer to screen canvas with integer pixel-perfect scale
+    // 12. Blit buffer to screen canvas with integer pixel-perfect scale
     AC.render.present();
   };
 
