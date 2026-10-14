@@ -139,6 +139,30 @@
       assert(npc.lines.length >= 2, `NPC ${npc.name} has at least 2 hint lines`);
     }
 
+    // Verify trigger registration and interaction for all resident NPCs
+    AC.setState('world');
+    AC.triggers.initDefaultTriggers();
+    AC.npcs.initTriggers();
+
+    for (const npc of npcs) {
+      const trigger = AC.triggers.getAll().find(t => t.id === `trigger-${npc.id}`);
+      assert(trigger, `Trigger registered for ${npc.id}`);
+      assert(trigger.prompt.includes(npc.name), `Trigger prompt contains NPC name: ${npc.name}`);
+
+      trigger.onInteract();
+      assert.equal(AC.dialogue.isOpen(), true, `Dialogue opens when interacting with ${npc.name}`);
+      assert.equal(AC.getState(), 'dialogue', `State machine transitions to dialogue for ${npc.name}`);
+
+      // Advance through dialogue to the end
+      let safety = 20;
+      while (AC.dialogue.isOpen() && safety > 0) {
+        AC.dialogue.advance();
+        safety--;
+      }
+      assert.equal(AC.dialogue.isOpen(), false, `Dialogue closes after finishing ${npc.name} lines`);
+      assert.equal(AC.getState(), 'world', `State machine returns to world after ${npc.name} dialogue`);
+    }
+
     // Companion
     assert(AC.companion, 'AC.companion must exist');
     AC.companion.init(32 * 16, 34 * 16);

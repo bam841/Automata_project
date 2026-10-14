@@ -114,13 +114,20 @@
 - [x] Total test suite: 77 tests passing (`node tests/run.js`) [VERIFIED].
 
 ## Known issues
-- None.
+- None. Character interaction bug resolved.
 
 ## Open questions for the human
-- None. Project is complete, verified, tested, and ready for defense.
+- None.
 
 ## Last session summary
-- Milestone 6 completed. Final exam generator (200 seeds tested), Exam Tower interactive modal, Canvas diploma generator with PNG download and print support, touch controls, settings modal with built-in reset dialog, and comprehensive defense documentation delivered. Total: 77 automated tests passing.
+- Fixed character interaction bug:
+  1. Implemented `AC.dialogue.show(speakerName, lines)` required by resident station NPCs (`js/world/npcs.js`).
+  2. Fixed keyboard advance in `js/world/dialogue.js` to accept `e.code === 'KeyE'`, `e.key === 'e'`, `e.key === 'E'`, `e.code === 'Space'`, `e.key === ' '`, and Enter, so pressing E or Space properly advances and closes dialogues.
+  3. Delegated dialogue click handling to the `#dialogue-box` container so clicking the card advances across all dialogue pages.
+  4. Added mobile touch support in `js/world/touch.js` so tapping the virtual E button advances dialogue when open.
+  5. Added canvas click interaction in `js/world/game.js` so clicking when near a character or board trigger interacts.
+  6. Added `AC.input.clearPressed()` on dialogue close and state transition to prevent immediate re-triggering.
+  7. Added unit tests in `tests/stations.test.js` and `tests/m4-world.test.js`. All 79 tests passing.
 
 
 

@@ -92,6 +92,8 @@
           if (sel === '.lecture-tabs') return createMockElement('div');
           if (sel === '[data-act="close"]') return createMockElement('button');
           if (sel === '[data-tab="practice"]') return createMockElement('button');
+          if (sel === '#dialogue-text') return createMockElement('div');
+          if (sel === '.dialogue-card') return createMockElement('div');
           return null;
         },
         querySelectorAll: () => [],

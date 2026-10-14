@@ -93,6 +93,33 @@
     assert(hints[1].includes('Exam Tower in the northeastern plaza is now unsealed'), 'Announces Exam Tower unlock');
   });
 
+  test('M2.7b: Dialogue system supports custom speakers, advance, and clean close', function () {
+    AC.setState('world');
+
+    // Custom speaker dialogue via AC.dialogue.show
+    AC.dialogue.show('Botanist Brooke', ['Welcome to Set Park!', 'Enjoy the Venn ponds!']);
+    assert.equal(AC.dialogue.isOpen(), true, 'Dialogue opens');
+    assert.equal(AC.getState(), 'dialogue', 'State transitions to dialogue');
+
+    // Advance first line (finish typewriter if active), then next line
+    AC.dialogue.advance();
+    AC.dialogue.advance();
+    assert.equal(AC.dialogue.isOpen(), true, 'Still open on line 2');
+
+    // Advance to end
+    AC.dialogue.advance();
+    AC.dialogue.advance();
+    assert.equal(AC.dialogue.isOpen(), false, 'Dialogue closed at end of lines');
+    assert.equal(AC.getState(), 'world', 'State transitions back to world');
+
+    // Test start() with Escape closing
+    AC.dialogue.start();
+    assert.equal(AC.dialogue.isOpen(), true, 'Prof Delta dialogue opens');
+    AC.dialogue.close();
+    assert.equal(AC.dialogue.isOpen(), false, 'Dialogue closed cleanly');
+    assert.equal(AC.getState(), 'world', 'State returned to world');
+  });
+
   test('M2.8: 20 lecture open/close cycles execute with zero errors', function () {
     AC.setState('world');
     for (let i = 0; i < 20; i++) {

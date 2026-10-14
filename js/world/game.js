@@ -45,6 +45,19 @@
 
     this.frameCount = 0;
     this.lastFpsUpdate = Date.now();
+
+    if (canvas && !canvas._interactBound) {
+      canvas._interactBound = true;
+      canvas.addEventListener('click', () => {
+        if (AC.getState && AC.getState() !== 'world') return;
+        if (this.player && AC.triggers) {
+          const nearest = AC.triggers.getNearest(this.player.x + 8, this.player.y + 8);
+          if (nearest && typeof nearest.onInteract === 'function') {
+            nearest.onInteract(this);
+          }
+        }
+      });
+    }
   };
 
   Game.prototype.update = function (dt) {

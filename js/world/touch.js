@@ -43,6 +43,10 @@
       btn.addEventListener('pointerdown', (e) => {
         e.preventDefault();
         btn.classList.add('pressed');
+        if (action === 'interact' && AC.dialogue && typeof AC.dialogue.isOpen === 'function' && AC.dialogue.isOpen()) {
+          AC.dialogue.advance();
+          return;
+        }
         setDown(true);
       });
 

@@ -35,7 +35,10 @@
     if (modalStates.includes(currentState)) {
       if (AC.input) AC.input.setEnabled(false);
     } else if (currentState === 'world') {
-      if (AC.input) AC.input.setEnabled(true);
+      if (AC.input) {
+        AC.input.setEnabled(true);
+        AC.input.clearPressed();
+      }
     }
 
     if (AC.bus && typeof AC.bus.emit === 'function') {
