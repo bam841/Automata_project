@@ -22,6 +22,7 @@ const modulesToLoad = [
   'js/world/tiles.js',
   'js/world/map-data.js',
   'js/world/districts.js',
+  'js/world/quests.js',
   'js/world/triggers.js',
   'js/world/hud.js',
   'js/world/dialogue.js',

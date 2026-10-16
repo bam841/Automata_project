@@ -49,7 +49,7 @@
       return [
         'Greetings traveler! I am Professor Delta (δ). Welcome to Automata City!',
         'To unlock the ancient Exam Tower, you must explore all four stations and earn their completion stamps.',
-        'Follow the stone roads! String Street lies to the West, and Set Park to the East.'
+        'Follow the stone roads! String Street lies to the West, and Set Park to the East. Find their foundational resources in the plaza first!'
       ];
     }
 
@@ -72,11 +72,15 @@
         dfa: 'South along the transit loop'
       };
       const dirText = directions[nextTarget.id] || 'through the city';
+      const isUnlocked = AC.quests ? AC.quests.isGateUnlocked(nextTarget.id) : true;
+      const q = AC.quests ? AC.quests.get(nextTarget.id) : null;
 
       return [
         `You are making steady progress! Stamps collected: ${stampCount} of 4.`,
         `Next, I recommend heading to ${nextTarget.name}, located ${dirText}.`,
-        'Step onto the station\'s glowing platform and press E to open the lecture board!'
+        isUnlocked
+          ? 'Step onto the station\'s glowing platform and press E to open the lecture board!'
+          : `Its gate requires the ${q ? q.itemName : 'resource'}. Retrieve it from the Central Plaza!`
       ];
     }
 

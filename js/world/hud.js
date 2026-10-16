@@ -69,7 +69,44 @@
       ctx.fillStyle = '#94a3b8';
       ctx.font = '7px monospace';
       ctx.textAlign = 'left';
-      ctx.fillText(`${pName} | [J] Journal [H] Hint [T] Cycle Time`, badgeX0, badgeY0 + badgeSize + 8);
+      ctx.fillText(`${pName} | [J] Journal [H] Hint [U] Unlock All`, badgeX0, badgeY0 + badgeSize + 8);
+
+      // Active Quest Objective Tracker
+      let questText = '';
+      let questColor = '#fbbf24';
+      const stampCount = AC.progress ? AC.progress.stampCount() : 0;
+      if (stampCount >= 4) {
+        questText = '★ Goal: Enter the Exam Tower in the Central Hub!';
+        questColor = '#f59e0b';
+      } else {
+        const unstamped = (AC.districts || []).filter(d => !AC.progress.hasStamp(d.id));
+        if (unstamped.length > 0) {
+          const target = unstamped[0];
+          const isUnlocked = AC.quests ? AC.quests.isGateUnlocked(target.id) : true;
+          const q = AC.quests ? AC.quests.get(target.id) : null;
+          if (!isUnlocked && q) {
+            questText = `📋 Quest: Find ${q.itemName} (${q.symbol}) in Plaza`;
+            questColor = q.color;
+          } else {
+            questText = `🎯 Goal: Master ${target.name} & claim stamp`;
+            questColor = target.color;
+          }
+        }
+      }
+
+      if (questText) {
+        ctx.font = 'bold 7px monospace';
+        const qw = Math.min(256, ctx.measureText(questText).width + 10);
+        ctx.fillStyle = 'rgba(11, 19, 32, 0.85)';
+        ctx.fillRect(badgeX0, badgeY0 + badgeSize + 11, qw, 11);
+        ctx.strokeStyle = questColor;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(badgeX0 + 0.5, badgeY0 + badgeSize + 11.5, qw - 1, 10);
+
+        ctx.fillStyle = questColor;
+        ctx.textAlign = 'left';
+        ctx.fillText(questText, badgeX0 + 4, badgeY0 + badgeSize + 19);
+      }
 
       // 2. Top-Right: Minimap Radar (44x44 px)
       const mmX = 270;

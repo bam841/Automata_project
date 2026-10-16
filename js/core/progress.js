@@ -12,6 +12,7 @@
       sprite: 0,
       stamps: { str: false, set: false, tree: false, dfa: false },
       lessons: { str: false, set: false, tree: false, dfa: false },
+      items: [],
       shards: [],
       exam: { passed: false, best: 0 },
       player: { tx: 32, ty: 34 },
@@ -54,6 +55,7 @@
           sprite: typeof parsed.sprite === 'number' ? parsed.sprite : 0,
           stamps: Object.assign({ str: false, set: false, tree: false, dfa: false }, parsed.stamps),
           lessons: Object.assign({ str: false, set: false, tree: false, dfa: false }, parsed.lessons),
+          items: Array.isArray(parsed.items) ? [...parsed.items] : [],
           shards: Array.isArray(parsed.shards) ? [...parsed.shards] : [],
           exam: Object.assign({ passed: false, best: 0 }, parsed.exam),
           player: Object.assign({ tx: 32, ty: 34 }, parsed.player),
@@ -113,6 +115,38 @@
 
     hasShard(id) {
       return state.shards.includes(id);
+    },
+
+    addItem(id) {
+      if (!state.items) state.items = [];
+      if (!state.items.includes(id)) {
+        state.items.push(id);
+        this.save();
+        if (AC.bus && typeof AC.bus.emit === 'function') {
+          AC.bus.emit('item:collected', { id });
+        }
+      }
+    },
+
+    hasItem(id) {
+      return Boolean(state.items && state.items.includes(id));
+    },
+
+    isGateUnlocked(districtId) {
+      if (this.hasStamp(districtId)) return true;
+      return this.hasItem(districtId) || this.hasItem('quest-' + districtId);
+    },
+
+    unlockAllGates() {
+      if (!state.items) state.items = [];
+      const districts = ['str', 'set', 'tree', 'dfa'];
+      for (const d of districts) {
+        if (!state.items.includes(d)) state.items.push(d);
+      }
+      this.save();
+      if (AC.bus && typeof AC.bus.emit === 'function') {
+        AC.bus.emit('gates:unlocked_all');
+      }
     },
 
     setLessonSeen(id) {

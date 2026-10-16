@@ -21,6 +21,7 @@ get the human's approval. Agents never change a settled decision silently.
 | D-014 | Exam: 8 questions, pass ≥ 6; 12 shards; 6–9 steps per lesson | Scope control | Accepted |
 
 | D-015 | AC.dialogue.show(speaker, lines) multi-speaker API with robust keycode/key & delegated click advance | Allows all resident NPCs and Professor Delta to be interacted with via E, Space, Enter, mouse click, and touch | Accepted |
+| D-016 | Station prerequisite quests with Hub resources, road gates, and active HUD quest tracker | Engages viewers during video demonstration defense and grounds each station in foundational theory | Accepted |
 
 ## New decisions (append below)
 <!-- | D-016 | … | … | Proposed/Accepted | -->

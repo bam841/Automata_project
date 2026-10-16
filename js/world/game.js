@@ -25,6 +25,9 @@
     if (AC.triggers) {
       AC.triggers.initDefaultTriggers();
     }
+    if (AC.quests && typeof AC.quests.initTriggers === 'function') {
+      AC.quests.initTriggers();
+    }
     if (AC.npcs && typeof AC.npcs.initTriggers === 'function') {
       AC.npcs.initTriggers();
     }
@@ -81,6 +84,15 @@
       }
     }
 
+    if (AC.input && AC.input.pressed('unlock')) {
+      if (AC.progress && typeof AC.progress.unlockAllGates === 'function') {
+        AC.progress.unlockAllGates();
+        if (AC.audio && typeof AC.audio.play === 'function') {
+          AC.audio.play('stamp');
+        }
+      }
+    }
+
     // Check interaction with nearest trigger
     if (AC.input && AC.input.pressed('interact') && this.player) {
       const nearest = AC.triggers ? AC.triggers.getNearest(this.player.x + 8, this.player.y + 8) : null;
@@ -99,6 +111,10 @@
 
     if (AC.shards && typeof AC.shards.update === 'function') {
       AC.shards.update(dt, this.player);
+    }
+
+    if (AC.quests && typeof AC.quests.update === 'function') {
+      AC.quests.update(dt, this.player);
     }
 
     if (AC.companion && typeof AC.companion.update === 'function') {
@@ -156,6 +172,11 @@
     // 6. Draw shards
     if (AC.shards && typeof AC.shards.draw === 'function') {
       AC.shards.draw(ctx, this.camera);
+    }
+
+    // 6b. Draw prerequisite quest items, road gates, and discovery cards
+    if (AC.quests && typeof AC.quests.draw === 'function') {
+      AC.quests.draw(ctx, this.camera);
     }
 
     // 7. Draw player and companion

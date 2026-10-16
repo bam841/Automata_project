@@ -50,8 +50,23 @@
             id: 'station-' + d.id,
             districtId: d.id,
             rect: { x: d.board.tx * 16, y: d.board.ty * 16, w: 16, h: 16 },
-            prompt: `E  Enter ${d.name}`,
+            get prompt() {
+              const unlocked = AC.quests ? AC.quests.isGateUnlocked(d.id) : true;
+              return unlocked ? `E  Enter ${d.name}` : `E  ${d.name} Board (Locked)`;
+            },
             onInteract(game) {
+              const unlocked = AC.quests ? AC.quests.isGateUnlocked(d.id) : true;
+              if (!unlocked) {
+                const quest = AC.quests ? AC.quests.get(d.id) : null;
+                if (AC.dialogue && quest) {
+                  AC.dialogue.show(d.name + ' Terminal', [
+                    `Access Denied! Station requires: ${quest.itemName}.`,
+                    `Theory Prerequisite: ${quest.theoryText}`,
+                    'Retrieve the item from the Central Plaza to calibrate this station!'
+                  ]);
+                }
+                return;
+              }
               if (AC.lessons && AC.lessons.shell) {
                 AC.lessons.shell.open(d.id);
               }

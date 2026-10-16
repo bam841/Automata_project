@@ -20,6 +20,9 @@
         if (map.isSolid(tx, ty)) {
           return true;
         }
+        if (AC.quests && typeof AC.quests.isSolid === 'function' && AC.quests.isSolid(tx, ty)) {
+          return true;
+        }
       }
     }
     return false;
