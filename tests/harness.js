@@ -115,6 +115,17 @@
     };
 
     root.document = mockDoc;
+
+    if (typeof root.Image === 'undefined') {
+      root.Image = class MockImage {
+        constructor() {
+          this.onload = null;
+          this.src = '';
+          this.width = 128;
+          this.height = 128;
+        }
+      };
+    }
   }
 
   const harness = { test, assert, runAll, tests };
