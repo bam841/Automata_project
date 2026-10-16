@@ -129,6 +129,7 @@
   6. Added presentation rapid unlock shortcut (`[U]` key or `AC.progress.unlockAllGates()`) for rapid rehearsal and demonstration takes.
   7. Added comprehensive unit and integration test suite (`tests/quests.test.js`).
   8. Full test suite passing: **85 tests passing** (`node tests/run.js`) and browser test runner green.
+  9. Created comprehensive presentation & defense script (`docs/AUTOMATA_CITY_STAGES_LOGIC_SCRIPT.md`) covering mathematical foundations, interactive visualizers, two-speaker cue lines, and professor Q&A defense.
 
 
 
